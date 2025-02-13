@@ -14,16 +14,13 @@ API_TOKEN = os.getenv("MY_TOKEN")
 bot = Bot(token=API_TOKEN)
 dispatcher = Dispatcher(bot)
 
-# Папка для сохранения изображений
-DOWNLOADS_MAIN_FOLDER = 'img'
-
-# Метаинформация об изображений в телеграмме
-images = dict()
+# Префикс к папке с изображениями
+DOWNLOADS_PREFIX = 'img'
 
 
+# утильная функция. Подставляет префикс к id юзера
 def util_get_download_folder(user_id):
-    print(user_id)
-    return DOWNLOADS_MAIN_FOLDER + "_" + str(user_id)
+    return DOWNLOADS_PREFIX + "_" + str(user_id)
 
 
 @dispatcher.message_handler(commands=['start'])
@@ -54,7 +51,6 @@ async def download_photo(message: types.Message):
         # Загружаем фотографию в локальную папку
         photo_path = os.path.join(downloads_folder, f'photo_{message.message_id}.jpg')
         await photo_file.download(photo_path)
-        images[message.message_id] = photo_info.file_id
 
 
 async def mix_up_photos(message):
