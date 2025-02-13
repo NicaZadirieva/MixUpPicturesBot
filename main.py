@@ -5,6 +5,7 @@ import os
 from os import listdir
 from os.path import isfile, join
 
+import random
 
 # загрузка переменных окружения
 load_dotenv()
@@ -44,12 +45,20 @@ async def download_photo(message: types.Message):
         await photo_file.download(photo_path)
 
         # Далее можно провести необходимую обработку или отправить ответ пользователю
-        await mix_up_photos(message)
+        images = await mix_up_photos(message)
+        await send_mixed_photos(message, images)
 
 
-async def mix_up_photos(message):
+async def mix_up_photos(message: types.Message):
     images = [f for f in listdir(DOWNLOADS_FOLDER) if isfile(join(DOWNLOADS_FOLDER, f))]
-    print(images)
+    random.shuffle(images)
+    return images
+
+
+async def send_mixed_photos(message: types.Message, mixed_images_path):
+    for image_path in mixed_images_path:
+        photo = open(join(DOWNLOADS_FOLDER, image_path), 'rb')
+        await message.answer_photo(photo)
 
 
 executor.start_polling(dispatcher)
