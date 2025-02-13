@@ -6,6 +6,7 @@ from os import listdir
 from os.path import isfile, join
 
 import random
+import shutil
 
 # загрузка переменных окружения
 load_dotenv()
@@ -35,9 +36,19 @@ async def handle_photo(message: types.Message):
     if not os.path.exists(downloads_folder):
         os.makedirs(downloads_folder)
     await download_photo(message)
-    # Далее можно провести необходимую обработку или отправить ответ пользователю
+
     mixed_images_path = await mix_up_photos(message)
     await send_mixed_photos(message, mixed_images_path)
+    markup = types.InlineKeyboardMarkup()
+    btn_del_user_images = types.InlineKeyboardButton("Удалить изображения из истории", callback_data=downloads_folder)
+    markup.add(btn_del_user_images)
+    await message.answer("Ваши фото обработаны", reply_markup=markup)
+
+
+@dispatcher.callback_query_handler()
+async def delete_user_folder(call):
+    shutil.rmtree(call.data)
+    await call.message.answer('Пришли мне список фото и я их перемешаю')
 
 
 async def download_photo(message: types.Message):
