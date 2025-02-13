@@ -1,8 +1,5 @@
 # MixUpPicturesBot
 Бот для перетасовки изображений. Можно использовать, чтобы изменить порядок картинок для изучения иностранных слов
 
-Кейс: использование > 4 изображений
-
-![image](https://github.com/user-attachments/assets/7cd32d1b-22c4-4d41-9ecd-3037b00891db)
-
-![image](https://github.com/user-attachments/assets/5a3f4df8-93ab-4547-b8f8-c53aff148a94)
+![1](https://github.com/user-attachments/assets/fb6e338b-b304-450b-a621-b13184a4f99e)
+![2](https://github.com/user-attachments/assets/dcd1c4bb-75f6-4ceb-8f98-b2036a592886)
