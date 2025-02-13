@@ -60,10 +60,10 @@ async def mix_up_photos():
 
 
 async def send_mixed_photos(message: types.Message, mixed_images_path):
-    media_group = []
+    media_group = types.MediaGroup()
     for image_path in mixed_images_path:
         message_id = image_path.split("_")[-1].split(".")[0]
-        media_group.append(images[message_id])
+        media_group.attach_photo(types.InputFile(os.path.join(DOWNLOADS_FOLDER, image_path), 'Превосходная фотография'))
     await bot.send_media_group(media=media_group, chat_id=message.chat.id)
 
 
