@@ -45,11 +45,11 @@ async def download_photo(message: types.Message):
         await photo_file.download(photo_path)
 
         # Далее можно провести необходимую обработку или отправить ответ пользователю
-        images = await mix_up_photos(message)
-        await send_mixed_photos(message, images)
+        mixed_images_path = await mix_up_photos()
+        await send_mixed_photos(message, mixed_images_path)
 
 
-async def mix_up_photos(message: types.Message):
+async def mix_up_photos():
     images = [f for f in listdir(DOWNLOADS_FOLDER) if isfile(join(DOWNLOADS_FOLDER, f))]
     random.shuffle(images)
     return images
